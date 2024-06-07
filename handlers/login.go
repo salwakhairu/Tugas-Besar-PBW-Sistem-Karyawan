@@ -11,7 +11,7 @@ import (
 )
 
 // LoginPageHandler menampilkan halaman login
-func LoginPageHandler(w http.ResponseWriter, r *http.Request) {
+func LoginPage(w http.ResponseWriter, r *http.Request) {
 	fp := filepath.Join("views", "login.html")
 	tmpl, err := template.ParseFiles(fp)
 	if err != nil {
