@@ -3,8 +3,8 @@ package main
 import (
 	"net/http"
 
-	"github.com/Dryluigi/crud-employee-go/database"
-	"github.com/Dryluigi/crud-employee-go/routes"
+	"github.com/salwakhairu/Tugas-Besar-PBW-Sistem-Karyawan/database"
+	"github.com/salwakhairu/Tugas-Besar-PBW-Sistem-Karyawan/routes"
 )
 
 func main() {
