@@ -2,14 +2,40 @@ package handlers
 
 import (
 	"database/sql"
+	"html/template"
 	"net/http"
+	"path/filepath"
 
+	"github.com/salwakhairu/Tugas-Besar-PBW-Sistem-Karyawan/controller"
 	"golang.org/x/crypto/bcrypt"
 )
 
+// MapRoutes memetakan semua rute HTTP
+func MapRoutes(server *http.ServeMux, db *sql.DB) {
+	server.HandleFunc("/", controller.NewHelloWorldController())
+	server.HandleFunc("/employee", controller.NewIndexEmployee(db))
+	server.HandleFunc("/employee/create", controller.NewCreateEmployeeController(db))
+	server.HandleFunc("/employee/update", controller.NewUpdateEmployeeController(db))
+	server.HandleFunc("/employee/delete", controller.NewDeleteEmployeeController(db))
+	server.HandleFunc("/login", LoginPage) // Gunakan fungsi LoginPage dari handlers
+	server.HandleFunc("/login/submit", LoginHandler(db))
+}
+
 // LoginPage menampilkan halaman login
 func LoginPage(w http.ResponseWriter, r *http.Request) {
-	// Logika untuk menampilkan halaman login
+	// Render halaman login di sini
+	fp := filepath.Join("views", "login.html")
+	tmpl, err := template.ParseFiles(fp)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	err = tmpl.Execute(w, nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 // LoginHandler memproses form login
